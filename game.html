@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUZZLE</title>
+    <link rel="stylesheet" href="mainquizz.css">
+    <!-- FontAweome CDN Link for Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"></script> -->
+
+</head>
+
+<body>
+    <!-- start Quiz button -->
+    <div class="start_btn"><button>Start Puzzle</button></div>
+    <!-- <div><strong> Name:<br></strong><input id="play_name" type="text"></div> -->
+
+    <!-- Info Box -->
+    <div class="info_box">
+        <div class="info-title"><span>Some Rules of this puzzle</span></div>
+        <div class="info-list">
+            <div class="info">1. You will have only <span>50 seconds</span> per each question.</div>
+            <div class="info">2. Once you select your answer, it can't be undone.</div>
+            <div class="info">3. You can't select any option once time goes off.</div>
+            <div class="info">4. You can't exit from the puzzle while you're playing.</div>
+            <div class="info">5. You'll get points on the basis of your correct answers.</div>
+        </div>
+        <div class="buttons">
+            <button class="quit">Exit Quiz</button>
+            <button class="restart">Continue</button>
+        </div>
+    </div>
+
+    <!-- Quiz Box -->
+    <div class="quiz_box">
+        <header>
+            <div class="title">Awesome Quiz Application</div>
+            <div class="timer">
+                <div class="time_left_txt">Time Left</div>
+                <div class="timer_sec">15</div>
+            </div>
+            <div class="time_line"></div>
+        </header>
+        <section>
+            <div class="que_text">
+                <!-- Here I've inserted question from JavaScript -->
+            </div>
+            <div class="option_list">
+                <!-- Here I've inserted options from JavaScript -->
+            </div>
+        </section>
+
+        <!-- footer of Quiz Box -->
+        <footer>
+            <div class="total_que">
+                <!-- Here I've inserted Question Count Number from JavaScript -->
+            </div>
+            <button class="next_btn">Next Que</button>
+        </footer>
+    </div>
+
+    <!-- Result Box -->
+    <div class="result_box">
+        <div class="icon">
+            <i class="fas fa-crown"></i>
+        </div>
+        <div class="complete_text">You've completed the Quiz!</div>
+        <div class="score_text">
+            <!-- Here I've inserted Score Result from JavaScript -->
+        </div>
+        <div class="buttons">
+            <button class="restart">Replay</button>
+            <button class="quit">Quit</button>
+            <!-- <button class="store" id="str"> Store</button> -->
+
+        </div>
+    </div>
+
+
+    <!-- Inside this JavaScript file I've coded all Quiz Codes -->
+    <script src="quizz.js"></script>
+
+    <!-- Inside this JavaScript file I've inserted Questions and Options only -->
+    <script src="questions.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_inJZ6S5eny1KZsy85U2-kJeDL-gQUYI",
+            authDomain: "detective-app-3fa72.firebaseapp.com",
+            databaseURL: "https://detective-app-3fa72-default-rtdb.firebaseio.com",
+            projectId: "detective-app-3fa72",
+            storageBucket: "detective-app-3fa72.appspot.com",
+            messagingSenderId: "69962609968",
+            appId: "1:69962609968:web:860427a131bf13b4b0c4f5",
+            measurementId: "G-FHTLG3CHXF"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-database.js"
+
+        const db = getDatabase();
+        
+
+        var username = document.getElementById("#play_name");
+        var result = document.getElementById(".score_text");
+
+        var store = document.querySelector("#str");
+
+
+
+        function save() {
+            set(ref(db, "People/" + username.value),{
+                Name: username.value,
+                Score: result.value,
+            })
+                .then(() => {
+                    alert("Data added successfully");
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+        }
+
+        store.addEventListener('click', save);
+
+    </script>
+
+
+</body>
+
+</html>
